@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="hy">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Նամակ - Ծրար</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f0f0;
+      overflow: hidden;
+    }
+    #envelope {
+      width: 300px;
+      height: 200px;
+      background-color: #f2e1b3;
+      border-radius: 8px;
+      cursor: pointer;
+      position: relative;
+      transition: transform 0.3s ease-in-out;
+    }
+    #envelope:active {
+      transform: scale(0.95);
+    }
+    #envelope .flap {
+      width: 100%;
+      height: 50%;
+      background-color: #fff;
+      position: absolute;
+      top: 0;
+      left: 0;
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      transition: transform 0.5s ease;
+    }
+    #envelope.open .flap {
+      transform: rotateX(180deg);
+    }
+    #invitation {
+      display: none;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    #invitationImage {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Ծրարը -->
+  <div id="envelope" onclick="openEnvelope()">
+    <div class="flap"></div>
+  </div>
+
+  <!-- Հրավիրատոմսի պատկեր -->
+  <div id="invitation">
+    <img id="invitationImage" src="" alt="Հրավիրատոմսի պատկեր">
+  </div>
+
+  <script>
+    // URL-ից ստանում ենք լուսանկարի URL
+    function getUrlParameter(name) {
+      var url = window.location.href;
+      var regex = new RegExp('[?&]' + name + '=([^&#]*)');
+      var result = regex.exec(url);
+      return result ? decodeURIComponent(result[1]) : null;
+    }
+
+    // Ծրարի բացումը
+    function openEnvelope() {
+      document.getElementById("envelope").classList.add("open");
+      setTimeout(function() {
+        document.getElementById("invitation").style.display = 'block';
+      }, 500);  // 500ms ուշացում` ծրարի բացումից հետո
+    }
+
+    // Ստանում ենք լուսանկարի URL
+    var imageUrl = getUrlParameter('image');
+    if (imageUrl) {
+      document.getElementById("invitationImage").src = imageUrl; // Լուսանկարը դնում ենք img տաղավարում
+    } else {
+      console.log("Լուսանկարի URL չի տրամադրվել:");
+    }
+  </script>
+
+</body>
+</html>
